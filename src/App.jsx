@@ -1,10 +1,9 @@
 import './App.css'
 
-function App() {
-
+function App () {
   return (
     <>
-     <h1>Hola Poke</h1>
+      <h1>Hola Poke</h1>
     </>
   )
 }
