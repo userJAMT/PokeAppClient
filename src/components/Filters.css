@@ -1,0 +1,32 @@
+.filters {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+  flex-wrap: wrap;
+  text-transform: capitalize;
+}
+
+.filters > div {
+  display: flex;
+  gap: 1rem;
+}
+
+select, option {
+  text-transform: capitalize;
+}
+
+.rangeFilter {
+  width: 230px;
+}
+
+@media only screen and (max-width: 867px) {
+  .filters {
+    flex-direction: column;
+    height: max-content;
+    justify-content: center;
+    width: 100%;
+  }
+}
