@@ -1,11 +1,10 @@
 import React, { useId } from 'react'
-import { useFilters } from '../hooks/useFilters'
+import { useFilters } from '../hooks/useFilters.js'
 import { types } from '../mocks/types.json'
 import './Filters.css'
 
 export function Filters () {
   const { filters, setFilters } = useFilters()
-
   const minAttackFilterId = useId()
   const typeFilterId = useId()
 

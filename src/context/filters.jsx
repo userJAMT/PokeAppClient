@@ -5,7 +5,7 @@ export const FiltersContext = createContext()
 export function FiltersProvider ({ children }) {
   const [filters, setFilters] = useState({
     types: 'all',
-    minAttack: 100
+    minAttack: 0
   })
 
   return (

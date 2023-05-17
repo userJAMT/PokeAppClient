@@ -1,6 +1,8 @@
 import './Cards.css'
+import { usePokemons } from '../hooks/usePokemons.js'
 
-export function Cards ({ pokemons }) {
+export function Cards () {
+  const pokemons = usePokemons()
   return (
     <main className='cards'>
       <ul>
