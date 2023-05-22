@@ -1,12 +1,10 @@
 import './Cards.css'
-import { usePokemons } from '../hooks/usePokemons.js'
 
-export function Cards () {
-  const pokemons = usePokemons()
+function WithResults ({ pokemons }) {
   return (
     <main className='cards'>
       <ul>
-        {pokemons.map(pokemon => (
+        {pokemons?.map(pokemon => (
           <li key={pokemon.id}>
             <img src={pokemon.img} alt={pokemon.name} />
             <div>
@@ -23,5 +21,22 @@ export function Cards () {
         ))}
       </ul>
     </main>
+  )
+}
+
+function WithoutResults () {
+  return (
+    <p>No se encontraron pokemons...</p>
+  )
+}
+
+export function Cards ({ pokemons }) {
+  const hasPokemons = pokemons?.length > 0
+  return (
+    <>
+      {hasPokemons
+        ? <WithResults pokemons={pokemons} />
+        : <WithoutResults />}
+    </>
   )
 }

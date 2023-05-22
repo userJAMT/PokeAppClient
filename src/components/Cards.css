@@ -22,7 +22,8 @@
   padding: 1rem;
 }
 
-.cards h3 {
+.cards strong {
+  text-transform: capitalize;
   margin: 0;
 }
 

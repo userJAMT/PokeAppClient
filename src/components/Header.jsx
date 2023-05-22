@@ -1,11 +1,10 @@
 import React from 'react'
-import { Filters } from './Filters'
 
-export function Header () {
+export function Header ({ children }) {
   return (
     <header>
       <h1>PokeApp</h1>
-      <Filters />
+      {children}
     </header>
   )
 }

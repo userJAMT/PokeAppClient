@@ -5,7 +5,7 @@ export function useFilters () {
   const { filters, setFilters } = useContext(FiltersContext)
 
   const filterPokemons = (pokemons) => {
-    return pokemons.filter(pokemon => {
+    return pokemons?.filter(pokemon => {
       return (
         pokemon.attack >= filters.minAttack &&
         (

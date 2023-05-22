@@ -54,6 +54,23 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input {
+  color: #8707ff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: #1a1a1a;
+  max-width: 190px;
+  outline: none;
+}
+
+input:hover {
+  border: #646cff solid 1px;
+}
+input:focus,
+input:focus-visible {
+  border: #646cff solid 1px;
+}
+
 ul {
   list-style: none;
   padding: 0;

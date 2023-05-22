@@ -48,6 +48,7 @@ export function Filters () {
           <option />
         </select>
       </div>
+
     </section>
   )
 }
