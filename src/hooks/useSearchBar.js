@@ -17,5 +17,11 @@ export function useSearchBar () {
     }
   }, [query])
 
-  return { query, setQuery, queryError }
+  const resetQuery = () => {
+    setQuery('')
+    setQueryError(null)
+    isFirstInput.current = true
+  }
+
+  return { query, setQuery, queryError, resetQuery }
 }
