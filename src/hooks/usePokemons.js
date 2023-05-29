@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFilters } from './useFilters.js'
-import { getPokemons, getPokemonsByName } from '../services/getPokemons.js'
+import { getPokemons } from '../services/getPokemons.js'
+import { useSearch } from './useSearch.js'
+import { useSorts } from './useSorts.js'
 
 export function usePokemons ({ query }) {
   const [pokemons, setPokemons] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [, setError] = useState('')
-
   const originalPokemons = useRef([])
   const previousQuery = useRef(query)
 
+  const { search, loading } = useSearch()
   const { filterPokemons } = useFilters()
+  const { sortPokemons } = useSorts()
 
   useEffect(() => {
     getPokemons()
@@ -23,27 +24,20 @@ export function usePokemons ({ query }) {
       })
   }, [])
 
-  const resetPokemons = () => {
-    setPokemons(originalPokemons.current)
-  }
-
   const searchPokemons = async () => {
     if (query === '' || previousQuery.current === query) return
-    try {
-      setLoading(true)
-      setError(null)
-      previousQuery.current = query
-      const newPokemons = await getPokemonsByName({ query })
-      setPokemons(newPokemons)
-    } catch (error) {
-      setError(error.message)
-      setPokemons([])
-    } finally {
-      setLoading(false)
-    }
+    previousQuery.current = query
+    const newPokemons = await search(query)
+    setPokemons(newPokemons)
+  }
+
+  const resetPokemons = () => {
+    setPokemons(originalPokemons.current)
+    previousQuery.current = ''
   }
 
   const filteredPokemons = filterPokemons(pokemons)
+  const sortedPokemons = sortPokemons(filteredPokemons)
 
-  return { pokemons: filteredPokemons, searchPokemons, resetPokemons, loading }
+  return { pokemons: sortedPokemons, searchPokemons, resetPokemons, loading }
 }

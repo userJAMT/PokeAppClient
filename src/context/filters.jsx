@@ -8,10 +8,17 @@ export function FiltersProvider ({ children }) {
     minAttack: 0
   })
 
+  const [sorts, setSorts] = useState({
+    order: 'default',
+    orderBy: 'default'
+  })
+
   return (
     <FiltersContext.Provider value={{
       filters,
-      setFilters
+      setFilters,
+      sorts,
+      setSorts
     }}
     >
       {children}
