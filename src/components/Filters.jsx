@@ -2,17 +2,21 @@ import React, { useContext, useId } from 'react'
 import { types } from '../mocks/types.json'
 import './Filters.css'
 import { FiltersContext } from '../context/filters'
+import { MultiRangeSlider } from './MultiRangeSlider'
 
 export function Filters () {
-  const { filters, setFilters } = useContext(FiltersContext)
-  const minAttackFilterId = useId()
+  const { setFilters } = useContext(FiltersContext)
+  const attackFilterId = useId()
   const typeFilterId = useId()
 
-  const handleChangeMinAttack = (event) => {
-    setFilters(prevState => ({
-      ...prevState,
-      minAttack: event.target.value
-    }))
+  const handleChange = ({ min, max, id }) => {
+    if (attackFilterId === id) {
+      setFilters(prevState => ({
+        ...prevState,
+        minAttack: min,
+        maxAttack: max
+      }))
+    }
   }
 
   const handleChangeType = (event) => {
@@ -27,15 +31,14 @@ export function Filters () {
 
       <div className='rangeFilter'>
         <label htmlFor='minAttack'>Attack</label>
-        <input
-          type='range'
-          id={minAttackFilterId}
-          min='0'
-          max='103'
-          onChange={handleChangeMinAttack}
-          value={filters.minAttack}
-        />
-        <span>{filters.minAttack}</span>
+        <div>
+          <MultiRangeSlider
+            id={attackFilterId}
+            min={0}
+            max={110}
+            onChange={handleChange}
+          />
+        </div>
       </div>
 
       <div>

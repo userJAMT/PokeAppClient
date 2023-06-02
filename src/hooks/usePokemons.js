@@ -47,6 +47,7 @@ export function usePokemons ({ query, sort }) {
     return pokemons?.filter(pokemon => {
       return (
         pokemon.attack >= filters.minAttack &&
+        pokemon.attack <= filters.maxAttack &&
       (
         filters.types === 'all' ||
         pokemon.types.includes(filters.types)
