@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
-import { useFilters } from './useFilters.js'
-import { getPokemons } from '../services/getPokemons.js'
-import { useSearch } from './useSearch.js'
-import { useSorts } from './useSorts.js'
+import { useEffect, useRef, useState, useContext, useMemo } from 'react'
+import { getPokemons, getPokemonsByName } from '../services/getPokemons.js'
+import { FiltersContext } from '../context/filters.jsx'
 
-export function usePokemons ({ query }) {
+export function usePokemons ({ query, sort }) {
   const [pokemons, setPokemons] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [, setError] = useState('')
+  const { filters } = useContext(FiltersContext)
   const originalPokemons = useRef([])
   const previousQuery = useRef(query)
-
-  const { search, loading } = useSearch()
-  const { filterPokemons } = useFilters()
-  const { sortPokemons } = useSorts()
 
   useEffect(() => {
     getPokemons()
@@ -25,10 +22,20 @@ export function usePokemons ({ query }) {
   }, [])
 
   const searchPokemons = async () => {
+    console.log('searchPokemons')
     if (query === '' || previousQuery.current === query) return
-    previousQuery.current = query
-    const newPokemons = await search(query)
-    setPokemons(newPokemons)
+    try {
+      setLoading(true)
+      setError(null)
+      previousQuery.current = query
+      const newPokemons = await getPokemonsByName({ query })
+      setPokemons(newPokemons)
+    } catch (error) {
+      setError(error.message)
+      setPokemons([])
+    } finally {
+      setLoading(false)
+    }
   }
 
   const resetPokemons = () => {
@@ -36,8 +43,23 @@ export function usePokemons ({ query }) {
     previousQuery.current = ''
   }
 
-  const filteredPokemons = filterPokemons(pokemons)
-  const sortedPokemons = sortPokemons(filteredPokemons)
+  const filteredPokemons = useMemo(() => {
+    return pokemons?.filter(pokemon => {
+      return (
+        pokemon.attack >= filters.minAttack &&
+      (
+        filters.types === 'all' ||
+        pokemon.types.includes(filters.types)
+      )
+      )
+    })
+  }, [filters, pokemons])
+
+  const sortedPokemons = useMemo(() => {
+    return sort
+      ? [...filteredPokemons].sort((a, b) => a.name.localeCompare(b.name))
+      : filteredPokemons
+  }, [sort, pokemons, filteredPokemons])
 
   return { pokemons: sortedPokemons, searchPokemons, resetPokemons, loading }
 }

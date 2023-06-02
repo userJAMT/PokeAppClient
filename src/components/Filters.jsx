@@ -1,10 +1,10 @@
-import React, { useId } from 'react'
-import { useFilters } from '../hooks/useFilters.js'
+import React, { useContext, useId } from 'react'
 import { types } from '../mocks/types.json'
 import './Filters.css'
+import { FiltersContext } from '../context/filters'
 
 export function Filters () {
-  const { filters, setFilters } = useFilters()
+  const { filters, setFilters } = useContext(FiltersContext)
   const minAttackFilterId = useId()
   const typeFilterId = useId()
 
