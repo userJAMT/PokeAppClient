@@ -16,6 +16,7 @@ export function SearchBar ({ searchPokemons, setQuery, queryError, query }) {
     <>
       <form className='searchForm' onSubmit={handleSubmit}>
         <input
+          className='input'
           onChange={handleChange}
           value={query}
           style={{ border: queryError && 'solid 1px red' }}
