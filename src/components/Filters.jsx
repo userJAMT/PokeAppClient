@@ -6,6 +6,7 @@ import { MultiRangeSlider } from './MultiRangeSlider'
 
 export function Filters () {
   const { setFilters } = useContext(FiltersContext)
+
   const attackFilterId = useId()
   const typeFilterId = useId()
 
@@ -30,7 +31,7 @@ export function Filters () {
     <section className='filters'>
 
       <div className='rangeFilter'>
-        <label htmlFor='minAttack'>Attack</label>
+        <label htmlFor={attackFilterId}>Attack</label>
         <div>
           <MultiRangeSlider
             id={attackFilterId}
@@ -42,7 +43,7 @@ export function Filters () {
       </div>
 
       <div>
-        <label htmlFor='type'>Types</label>
+        <label htmlFor={typeFilterId}>Types</label>
         <select id={typeFilterId} onChange={handleChangeType}>
           <option value='all'>Todos</option>
           {types?.map(type => (
